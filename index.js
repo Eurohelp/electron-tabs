@@ -401,8 +401,16 @@ const TabPrivate = {
         const tabWebviewDidFinishLoadHandler = function (e) {
             this.emit("webview-ready", this);
         };
+        const tabWebviewDidFaviconFinishLoadHandler = function (e) {
+            this.emit("webview-favicon-ready", this, e);
+        };
+        const tabWebviewDidTitleFinishLoadHandler = function (e) {
+            this.emit("webview-title-ready", this, e);
+        };
 
         this.webview.addEventListener("did-finish-load", tabWebviewDidFinishLoadHandler.bind(this), false);
+        this.webview.addEventListener("page-favicon-updated", tabWebviewDidFaviconFinishLoadHandler.bind(this), false);
+        this.webview.addEventListener("page-title-updated", tabWebviewDidTitleFinishLoadHandler.bind(this), false);
 
         this.webview.classList.add(this.tabGroup.options.viewClass);
         if (this.webviewAttributes) {
